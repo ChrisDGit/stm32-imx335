@@ -1,4 +1,4 @@
-# BSP STM32-IMX335 Camera Sensor Component
+# BSP STM32 Camera Sensor Components
 
 ![latest tag](https://img.shields.io/github/v/tag/STMicroelectronics/stm32-imx335.svg?color=brightgreen)
 
@@ -19,7 +19,67 @@ Two models of publication are proposed for the STM32Cube embedded software:
 
 ## Description
 
-This **stm32-imx335** MCU component repository is one element **common to all** STM32Cube MCU embedded software packages, providing the **STM32-IMX335** BSP LCD component part.
+This repository provides STM32Cube BSP camera sensor components for multiple Sony image sensors:
+
+### IMX335 Camera Sensor
+- **IMX335** BSP camera sensor component
+- Resolution: 2592x1944 (5MP)
+- Pixel Format: RAW10
+- Interface: I2C
+- External Clock: 6MHz/18MHz/24MHz/27MHz/74MHz support
+
+### IMX219 Camera Sensor
+- **IMX219** BSP camera sensor component  
+- Multiple resolution support:
+  - 3280x2464 (8MP, 15fps)
+  - 1920x1080 (1080p, 30fps)
+  - 1640x1232 (2x2 binned, 30fps)
+  - 640x480 (VGA, 30fps)
+- Pixel Formats: RAW8, RAW10
+- Interface: I2C
+- External Clock: 24MHz
+- Features: Exposure control, gain control, test patterns, mirror/flip
+
+## API Documentation
+
+Both sensor drivers follow the same STM32Cube BSP component interface:
+
+### Common Functions
+- `RegisterBusIO()` - Register I2C bus operations
+- `Init()` - Initialize sensor with resolution and pixel format
+- `DeInit()` - Deinitialize sensor
+- `ReadID()` - Read sensor chip ID
+- `GetCapabilities()` - Get sensor capabilities
+- `SetGain()` - Set sensor gain
+- `SetExposure()` - Set sensor exposure
+- `SetTestPattern()` - Configure test pattern
+- `MirrorFlipConfig()` - Configure mirror/flip
+- `GetSensorInfo()` - Get sensor information
+
+### Usage Example
+```c
+#include "imx219.h"
+
+IMX219_Object_t imx219_obj;
+IMX219_IO_t imx219_io = {
+    .Init = BSP_I2C_Init,
+    .DeInit = BSP_I2C_DeInit,
+    .Address = 0x10,
+    .WriteReg = BSP_I2C_WriteReg,
+    .ReadReg = BSP_I2C_ReadReg,
+    .GetTick = BSP_GetTick
+};
+
+/* Register bus operations */
+IMX219_RegisterBusIO(&imx219_obj, &imx219_io);
+
+/* Initialize with 1920x1080 resolution and RAW10 format */
+IMX219_Init(&imx219_obj, IMX219_R1920_1080, IMX219_RAW_RGGB10);
+
+/* Set gain and exposure */
+IMX219_SetGain(&imx219_obj, 20000);  /* 20.0x gain */
+IMX219_SetExposure(&imx219_obj, 1000);  /* 1000 lines */
+```
 
 ## Release note
 
@@ -27,7 +87,7 @@ Details about the content of this release are available in the release note [her
 
 ## Compatibility information
 
-Please refer to the repository of the BSP **board** driver you are using to know which version of this BSP component driver to use. It is **crucial** that you use a consistent set of versions. It is **crucial** that you use a consistent set of versions as indicated.
+Please refer to the repository of the BSP **board** driver you are using to know which version of this BSP component driver to use. It is **crucial** that you use a consistent set of versions.
 
 ## Troubleshooting
 

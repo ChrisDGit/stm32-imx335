@@ -21,18 +21,41 @@
 <div class="row">
 <div class="col-sm-12 col-lg-4">
 <center>
-<h1 id="release-notes-for-imx335-camera-sensor-component-driver">Release Notes for <mark>IMX335</mark> camera sensor Component Driver</h1>
+<h1 id="release-notes-for-camera-sensor-component-drivers">Release Notes for <mark>STM32 Camera Sensor</mark> Component Drivers</h1>
 <p>Copyright © 2023 STMicroelectronics<br />
 </p>
 <a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
 </center>
 <h1 id="purpose">Purpose</h1>
-<p>This driver provides a set of functions offered by IMX335 camera sensor component</p>
+<p>This driver provides a set of functions offered by STM32 BSP camera sensor components including IMX335 and IMX219</p>
 </div>
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update history</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section5" checked aria-hidden="true"> <label for="collapse-section5" aria-hidden="true"><strong>V1.3.1 / 22-October-2024</strong></label>
+<input type="checkbox" id="collapse-section6" checked aria-hidden="true"> <label for="collapse-section6" aria-hidden="true"><strong>V2.0.0 / 09-July-2024</strong></label>
+<div>
+<h2 id="main-changes">Main changes</h2>
+<ul>
+<li>Add IMX219 camera sensor component driver</li>
+<li>Support multiple resolutions: 3280x2464 (8MP), 1920x1080 (1080p), 1640x1232 (2x2 binned), 640x480 (VGA)</li>
+<li>Support both RAW8 and RAW10 pixel formats</li>
+<li>Complete implementation of exposure control, gain control, test patterns, and mirror/flip configurations</li>
+<li>24MHz external clock support for IMX219</li>
+<li>Maintain backward compatibility with existing IMX335 driver</li>
+</ul>
+<h2 id="backward-compatibility">Backward Compatibility</h2>
+<p>Fully backward compatible with IMX335 driver. New IMX219 driver provides additional functionality.</p>
+<h2 id="dependencies">Dependencies</h2>
+<ul>
+<li>This software release is compatible with:
+<ul>
+<li>BSP Common v7.3.0 or above</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section5" aria-hidden="true"> <label for="collapse-section5" aria-hidden="true"><strong>V1.3.1 / 22-October-2024</strong></label>
 <div>
 <h2 id="main-changes">Main changes</h2>
 <ul>
