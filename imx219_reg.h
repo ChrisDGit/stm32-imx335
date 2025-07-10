@@ -55,7 +55,6 @@
 #define IMX219_MODE_STREAMING       0x01
 #define IMX219_MODE_STANDBY         0x00
 
-#define IMX219_REG_HOLD           0x0104
 #define IMX219_REG_GAIN           0x0157
 #define IMX219_REG_EXPOSURE       0x015A
 #define IMX219_REG_FRAME_LENGTH   0x0160

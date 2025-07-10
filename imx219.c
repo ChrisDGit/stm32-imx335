@@ -663,7 +663,6 @@ int32_t IMX219_GetSensorInfo(IMX219_Object_t *pObj, IMX219_SensorInfo_t *Info)
 int32_t IMX219_SetGain(IMX219_Object_t *pObj, int32_t gain)
 {
   int32_t ret = IMX219_OK;
-  uint8_t hold;
   uint8_t gain_val;
 
   if ((gain > IMX219_GAIN_MAX) || (gain < IMX219_GAIN_MIN))
@@ -675,25 +674,9 @@ int32_t IMX219_SetGain(IMX219_Object_t *pObj, int32_t gain)
     /* Convert to IMX219 gain unit (0.3 dB = 300 mdB) */
     gain_val = (uint8_t)(gain / IMX219_GAIN_UNIT_MDB);
 
-    hold = 1;
-    if(imx219_write_reg(&pObj->Ctx, IMX219_REG_HOLD, &hold, 1) != IMX219_OK)
+    if(imx219_write_reg(&pObj->Ctx, IMX219_REG_GAIN, &gain_val, 1) != IMX219_OK)
     {
       ret = IMX219_ERROR;
-    }
-    else
-    {
-      if(imx219_write_reg(&pObj->Ctx, IMX219_REG_GAIN, &gain_val, 1) != IMX219_OK)
-      {
-        ret = IMX219_ERROR;
-      }
-      else
-      {
-        hold = 0;
-        if(imx219_write_reg(&pObj->Ctx, IMX219_REG_HOLD, &hold, 1) != IMX219_OK)
-        {
-          ret = IMX219_ERROR;
-        }
-      }
     }
   }
 
@@ -710,7 +693,6 @@ int32_t IMX219_SetExposure(IMX219_Object_t *pObj, int32_t exposure)
 {
   int32_t ret = IMX219_OK;
   uint32_t frame_length, coarse_time;
-  uint8_t hold;
   uint8_t exposure_regs[2];
 
   if (imx219_read_reg(&pObj->Ctx, IMX219_REG_FRAME_LENGTH, (uint8_t *)&frame_length, 2) != IMX219_OK)
@@ -735,25 +717,9 @@ int32_t IMX219_SetExposure(IMX219_Object_t *pObj, int32_t exposure)
     exposure_regs[0] = (uint8_t)((coarse_time >> 8) & 0xFF);
     exposure_regs[1] = (uint8_t)(coarse_time & 0xFF);
 
-    hold = 1;
-    if(imx219_write_reg(&pObj->Ctx, IMX219_REG_HOLD, &hold, 1) != IMX219_OK)
+    if(imx219_write_reg(&pObj->Ctx, IMX219_REG_EXPOSURE, exposure_regs, 2) != IMX219_OK)
     {
       ret = IMX219_ERROR;
-    }
-    else
-    {
-      if(imx219_write_reg(&pObj->Ctx, IMX219_REG_EXPOSURE, exposure_regs, 2) != IMX219_OK)
-      {
-        ret = IMX219_ERROR;
-      }
-      else
-      {
-        hold = 0;
-        if(imx219_write_reg(&pObj->Ctx, IMX219_REG_HOLD, &hold, 1) != IMX219_OK)
-        {
-          ret = IMX219_ERROR;
-        }
-      }
     }
   }
 
